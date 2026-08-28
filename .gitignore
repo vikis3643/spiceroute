@@ -1,0 +1,32 @@
+﻿# Secrets
+.env
+.env.*
+!.env.example
+
+# Frontend
+node_modules/
+restaurant-frontend/node_modules/
+restaurant-frontend/dist/
+restaurant-frontend/.vite/
+
+# Backend
+restaurant-backend/**/target/
+*.class
+*.jar
+*.war
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Build
+.dist/
