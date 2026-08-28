@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const CHANGE_PASSWORD_API_URL =
-  "http://localhost:8080/api/restaurant-admin/auth/change-password";
+  `${import.meta.env.VITE_API_BASE_URL}/restaurant-admin/auth/change-password`;
 
 function AdminChangePassword() {
   const [formData, setFormData] =

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const RECOMMENDATION_API =
-  "http://localhost:8080/api/recommendations";
+  `${import.meta.env.VITE_API_BASE_URL}/recommendations`;
 
 const INITIAL_PREFERENCES = {
   maximumBudget: "300",

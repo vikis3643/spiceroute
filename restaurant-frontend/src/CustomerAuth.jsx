@@ -5,7 +5,7 @@ import {
 } from "react";
 
 const CUSTOMER_AUTH_API =
-  "http://localhost:8080/api/customer-auth";
+  `${import.meta.env.VITE_API_BASE_URL}/customer-auth`;
 
 const EMPTY_FORM = {
   fullName: "",

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const RESET_PASSWORD_API =
-  "http://localhost:8080/api/customer-auth/reset-password";
+  `${import.meta.env.VITE_API_BASE_URL}/customer-auth/reset-password`;
 
 function ResetPassword() {
   const resetToken = new URLSearchParams(

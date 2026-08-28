@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const PROFILE_API =
-  "http://localhost:8080/api/customer/profile";
+  `${import.meta.env.VITE_API_BASE_URL}/customer/profile`;
 
 const EMPTY_PROFILE = {
   fullName: "",

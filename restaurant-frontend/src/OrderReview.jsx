@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const REVIEWS_API =
-  "http://localhost:8080/api/reviews";
+  `${import.meta.env.VITE_API_BASE_URL}/reviews`;
 
 function StarRating({
   label,

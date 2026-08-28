@@ -6,7 +6,7 @@ import {
 import AdminNav from "./AdminNav.jsx";
 
 const API_BASE_URL =
-  "http://localhost:8080/api/restaurant-admin";
+  `${import.meta.env.VITE_API_BASE_URL}/restaurant-admin`;
 
 function AdminDashboard({
   formatPrice,

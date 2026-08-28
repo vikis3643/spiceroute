@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const LOGIN_API_URL =
-  "http://localhost:8080/api/restaurant-admin/auth/login";
+  `${import.meta.env.VITE_API_BASE_URL}/restaurant-admin/auth/login`;
 
 function AdminLogin({ onLogin }) {
   const [formData, setFormData] = useState({

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AdminNav from "./AdminNav.jsx";
 
 const PROFILE_API_URL =
-  "http://localhost:8080/api/restaurant-admin/profile";
+  `${import.meta.env.VITE_API_BASE_URL}/restaurant-admin/profile`;
 
 function AdminProfile() {
   const [profile, setProfile] =

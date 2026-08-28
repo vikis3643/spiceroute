@@ -6,7 +6,7 @@ import {
 import AdminNav from "./AdminNav.jsx";
 
 const ORDERS_API_URL =
-  "http://localhost:8080/api/restaurant-admin/orders";
+  `${import.meta.env.VITE_API_BASE_URL}/restaurant-admin/orders`;
 
 const ORDER_STATUSES = [
   "PLACED",

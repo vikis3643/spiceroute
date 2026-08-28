@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const WISHLIST_API =
-  "http://localhost:8080/api/wishlist";
+  `${import.meta.env.VITE_API_BASE_URL}/wishlist`;
 
 function clearCustomerSession() {
   sessionStorage.removeItem("customerToken");

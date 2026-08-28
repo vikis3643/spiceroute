@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 const SUPPORT_API =
-  "http://localhost:8080/api/support";
+  `${import.meta.env.VITE_API_BASE_URL}/support`;
 
 const ORDERS_API =
-  "http://localhost:8080/api/orders/my-orders";
+  `${import.meta.env.VITE_API_BASE_URL}/orders/my-orders`;
 
 const EMPTY_FORM = {
   subject: "",

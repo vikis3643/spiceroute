@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AdminNav from "./AdminNav.jsx";
 
 const ADMIN_SUPPORT_API =
-  "http://localhost:8080/api/support/restaurant-admin/tickets";
+  `${import.meta.env.VITE_API_BASE_URL}/support/restaurant-admin/tickets`;
 
 const TICKET_STATUSES = [
   "OPEN",

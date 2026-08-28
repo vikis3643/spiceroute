@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
 const ORDERS_API_URL =
-  "http://localhost:8080/api/orders";
+  `${import.meta.env.VITE_API_BASE_URL}/orders`;
 
 const ORDER_QUOTE_API_URL =
-  "http://localhost:8080/api/orders/quote";
+  `${import.meta.env.VITE_API_BASE_URL}/orders/quote`;
 
 const PROFILE_API_URL =
-  "http://localhost:8080/api/customer/profile";
+  `${import.meta.env.VITE_API_BASE_URL}/customer/profile`;
 
 function minimumScheduleValue() {
   const minimumDate = new Date(

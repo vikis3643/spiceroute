@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 const MY_ORDERS_API =
-  "http://localhost:8080/api/orders/my-orders";
+  `${import.meta.env.VITE_API_BASE_URL}/orders/my-orders`;
 
 const ORDERS_API =
-  "http://localhost:8080/api/orders";
+  `${import.meta.env.VITE_API_BASE_URL}/orders`;
 
 const ORDER_PROGRESS = [
   "PLACED",

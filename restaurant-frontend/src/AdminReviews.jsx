@@ -7,7 +7,7 @@ import {
 import AdminNav from "./AdminNav.jsx";
 
 const REVIEWS_API_URL =
-  "http://localhost:8080/api/restaurant-admin/reviews";
+  `${import.meta.env.VITE_API_BASE_URL}/restaurant-admin/reviews`;
 
 function AdminReviews() {
   const [reviews, setReviews] =
