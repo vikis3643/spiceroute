@@ -1,16 +1,11 @@
 package com.aditya.restaurant_backend.service;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.aditya.restaurant_backend.entity.CustomerOrder;
@@ -22,24 +17,19 @@ import com.aditya.restaurant_backend.entity.PaymentStatus;
 @Service
 public class EmailService {
 
+    private final JavaMailSender mailSender;
     private final String mailUsername;
-private final String frontendBaseUrl;
-private final String resendApiKey;
-private final String resendFromEmail;
+    private final String frontendBaseUrl;
 public EmailService(
+        JavaMailSender mailSender,
         @Value("${spring.mail.username}")
         String mailUsername,
         @Value("${app.frontend.base-url}")
-        String frontendBaseUrl,
-        @Value("${resend.api-key}")
-        String resendApiKey,
-        @Value("${resend.from-email}")
-        String resendFromEmail
+        String frontendBaseUrl
 ) {
+    this.mailSender = mailSender;
     this.mailUsername = mailUsername;
     this.frontendBaseUrl = frontendBaseUrl;
-    this.resendApiKey = resendApiKey;
-    this.resendFromEmail = resendFromEmail;
 }
 
     public void sendPasswordResetEmail(
@@ -75,7 +65,7 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        sendWithResend(message);
+        mailSender.send(message);
     }
 
     public void sendOrderConfirmationEmail(
@@ -108,7 +98,7 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        sendWithResend(message);
+        mailSender.send(message);
     }
 
   public void sendOrderStatusEmail(
@@ -173,7 +163,7 @@ public EmailService(
                     + "SpiceRoute Restaurant"
     );
 
-    sendWithResend(message);
+    mailSender.send(message);
 }
 
     public void sendOrderCancellationEmail(
@@ -214,7 +204,7 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        sendWithResend(message);
+        mailSender.send(message);
     }
         public void sendSupportTicketCreatedEmail(
             Long ticketId,
@@ -250,7 +240,7 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        sendWithResend(customerMessage);
+        mailSender.send(customerMessage);
 
 
         // Notification email to restaurant/admin
@@ -281,7 +271,7 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        sendWithResend(adminMessage);
+        mailSender.send(adminMessage);
     }
 
 
@@ -319,7 +309,7 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        sendWithResend(message);
+        mailSender.send(message);
     }
 
 
@@ -360,7 +350,7 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        sendWithResend(message);
+        mailSender.send(message);
     }
 
 
@@ -404,7 +394,7 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        sendWithResend(message);
+        mailSender.send(message);
     }
     // ==========================================
 // RESTAURANT APPROVAL / ADMIN CREDENTIALS
@@ -469,7 +459,7 @@ public void sendRestaurantApprovalEmail(
                     + "SpiceRoute Team"
     );
 
-    sendWithResend(
+    mailSender.send(
             message
     );
 }
@@ -480,111 +470,12 @@ public void sendRestaurantApprovalEmail(
         SimpleMailMessage message =
                 new SimpleMailMessage();
 
-        message.setFrom(resendFromEmail);
+        message.setFrom(mailUsername);
         message.setTo(recipient);
         message.setSubject(subject);
 
         return message;
     }
-private void sendWithResend(
-        SimpleMailMessage message
-) {
-    try {
-        String recipient =
-                message.getTo()[0];
-
-        String subject =
-                message.getSubject();
-
-        String text =
-                message.getText();
-
-        String json =
-                "{"
-                        + "\"from\":\""
-                        + escapeJson(resendFromEmail)
-                        + "\","
-                        + "\"to\":[\""
-                        + escapeJson(recipient)
-                        + "\"],"
-                        + "\"subject\":\""
-                        + escapeJson(subject)
-                        + "\","
-                        + "\"text\":\""
-                        + escapeJson(text)
-                        + "\""
-                        + "}";
-
-        HttpRequest request =
-                HttpRequest.newBuilder()
-                        .uri(
-                                URI.create(
-                                        "https://api.resend.com/emails"
-                                )
-                        )
-                        .header(
-                                "Authorization",
-                                "Bearer " + resendApiKey
-                        )
-                        .header(
-                                "Content-Type",
-                                "application/json"
-                        )
-                        .POST(
-                                HttpRequest.BodyPublishers.ofString(
-                                        json,
-                                        StandardCharsets.UTF_8
-                                )
-                        )
-                        .build();
-
-        HttpResponse<String> response =
-                HttpClient.newHttpClient()
-                        .send(
-                                request,
-                                HttpResponse.BodyHandlers.ofString()
-                        );
-
-        if (response.statusCode() < 200
-                || response.statusCode() >= 300) {
-
-            throw new IllegalStateException(
-                    "Resend email failed. HTTP "
-                            + response.statusCode()
-                            + ": "
-                            + response.body()
-            );
-        }
-
-    } catch (
-            IOException
-                    | InterruptedException exception
-    ) {
-        if (exception instanceof InterruptedException) {
-            Thread.currentThread().interrupt();
-        }
-
-        throw new IllegalStateException(
-                "Could not send email through Resend",
-                exception
-        );
-    }
-}
-
-private String escapeJson(
-        String value
-) {
-    if (value == null) {
-        return "";
-    }
-
-    return value
-            .replace("\\", "\\\\")
-            .replace("\"", "\\\"")
-            .replace("\r", "\\r")
-            .replace("\n", "\\n")
-            .replace("\t", "\\t");
-}
     private String createOrderSummary(
             CustomerOrder order
     ) {
