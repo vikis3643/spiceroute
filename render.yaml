@@ -1,0 +1,9 @@
+services:
+  - type: static
+    name: spiceroute-frontend
+    buildCommand: cd restaurant-frontend && npm.cmd install && npm.cmd run build
+    staticPublishPath: restaurant-frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
