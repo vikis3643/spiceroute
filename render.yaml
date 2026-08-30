@@ -1,6 +1,7 @@
 services:
-  - type: static
+  - type: web
     name: spiceroute-frontend
+    runtime: static
     buildCommand: cd restaurant-frontend && npm.cmd install && npm.cmd run build
     staticPublishPath: restaurant-frontend/dist
     routes:
