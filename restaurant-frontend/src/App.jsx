@@ -556,12 +556,6 @@ function addToCart(menuItem) {
           >
             ✨ Recommend Food
           </a>
-          <a
-            className="partner-nav-link"
-              href="/partner-with-us"
-          >
-            🤝 Partner With Us
-          </a>
           {customerName ? (
             <div className="customer-nav-actions">
               <a
@@ -641,13 +635,6 @@ function addToCart(menuItem) {
               Customer Login
             </a>
           )}
-
-          <a
-            className="admin-login-link"
-            href="/admin"
-          >
-            Admin Login
-          </a>
 
           <button
             className="cart-button"
