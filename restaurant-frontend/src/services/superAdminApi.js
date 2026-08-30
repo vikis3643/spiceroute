@@ -99,7 +99,7 @@ export async function superAdminLogin(
   password
 ) {
   const response = await request(
-    "/api/super-admin/auth/login",
+    "/super-admin/auth/login",
     {
       method: "POST",
       auth: false,
@@ -123,7 +123,7 @@ export async function superAdminLogin(
 
 export function getSuperAdminDashboard() {
   return request(
-    "/api/super-admin/dashboard/summary"
+    "/super-admin/dashboard/summary"
   );
 }
 
@@ -137,13 +137,13 @@ export function getRestaurants(status = null) {
     : "";
 
   return request(
-    `/api/super-admin/restaurants${query}`
+    `/super-admin/restaurants${query}`
   );
 }
 
 export function getRestaurant(restaurantId) {
   return request(
-    `/api/super-admin/restaurants/${restaurantId}`
+    `/super-admin/restaurants/${restaurantId}`
   );
 }
 
@@ -152,7 +152,7 @@ export function updateRestaurantApproval(
   approvalStatus
 ) {
   return request(
-    `/api/super-admin/restaurants/${restaurantId}/approval`,
+    `/super-admin/restaurants/${restaurantId}/approval`,
     {
       method: "PATCH",
       body: {
@@ -167,7 +167,7 @@ export function updateRestaurantActive(
   active
 ) {
   return request(
-    `/api/super-admin/restaurants/${restaurantId}/active`,
+    `/super-admin/restaurants/${restaurantId}/active`,
     {
       method: "PATCH",
       body: {
@@ -182,7 +182,7 @@ export function updateRestaurantCommission(
   commissionPercentage
 ) {
   return request(
-    `/api/super-admin/restaurants/${restaurantId}/commission`,
+    `/super-admin/restaurants/${restaurantId}/commission`,
     {
       method: "PATCH",
       body: {
@@ -207,7 +207,7 @@ export function getRestaurantAdmins(
       : "";
 
   return request(
-    `/api/super-admin/restaurant-admins${query}`
+    `/super-admin/restaurant-admins${query}`
   );
 }
 
@@ -215,7 +215,7 @@ export function getRestaurantAdmin(
   adminId
 ) {
   return request(
-    `/api/super-admin/restaurant-admins/${adminId}`
+    `/super-admin/restaurant-admins/${adminId}`
   );
 }
 
@@ -228,7 +228,7 @@ export function createRestaurantAdmin(
   }
 ) {
   return request(
-    "/api/super-admin/restaurant-admins",
+    "/super-admin/restaurant-admins",
     {
       method: "POST",
       body: {
@@ -249,7 +249,7 @@ export function updateRestaurantAdmin(
   }
 ) {
   return request(
-    `/api/super-admin/restaurant-admins/${adminId}`,
+    `/super-admin/restaurant-admins/${adminId}`,
     {
       method: "PUT",
       body: {
@@ -265,7 +265,7 @@ export function updateRestaurantAdminActive(
   active
 ) {
   return request(
-    `/api/super-admin/restaurant-admins/${adminId}/active`,
+    `/super-admin/restaurant-admins/${adminId}/active`,
     {
       method: "PATCH",
       body: {
@@ -280,7 +280,7 @@ export function resetRestaurantAdminPassword(
   newPassword
 ) {
   return request(
-    `/api/super-admin/restaurant-admins/${adminId}/password`,
+    `/super-admin/restaurant-admins/${adminId}/password`,
     {
       method: "PATCH",
       body: {
@@ -296,19 +296,19 @@ export function resetRestaurantAdminPassword(
 
 export function getCustomers() {
   return request(
-    "/api/super-admin/customers"
+    "/super-admin/customers"
   );
 }
 
 export function getCustomer(customerId) {
   return request(
-    `/api/super-admin/customers/${customerId}`
+    `/super-admin/customers/${customerId}`
   );
 }
 
 export function getCustomerOrders(customerId) {
   return request(
-    `/api/super-admin/customers/${customerId}/orders`
+    `/super-admin/customers/${customerId}/orders`
   );
 }
 
@@ -317,7 +317,7 @@ export function updateCustomerActive(
   active
 ) {
   return request(
-    `/api/super-admin/customers/${customerId}/active`,
+    `/super-admin/customers/${customerId}/active`,
     {
       method: "PATCH",
       body: {
@@ -369,19 +369,19 @@ export function getSuperAdminOrders(filters = {}) {
       : "";
 
   return request(
-    `/api/super-admin/orders${query}`
+    `/super-admin/orders${query}`
   );
 }
 
 export function getSuperAdminOrder(orderId) {
   return request(
-    `/api/super-admin/orders/${orderId}`
+    `/super-admin/orders/${orderId}`
   );
 }
 
 export function getPaymentSummary() {
   return request(
-    "/api/super-admin/orders/payments/summary"
+    "/super-admin/orders/payments/summary"
   );
 }
 
@@ -391,7 +391,7 @@ export function getPaymentSummary() {
 
 export function getPlatformEarnings() {
   return request(
-    "/api/super-admin/earnings"
+    "/super-admin/earnings"
   );
 }
 
@@ -400,7 +400,7 @@ export function getEarningsByRange(
   endDate
 ) {
   return request(
-    `/api/super-admin/earnings/range?startDate=${startDate}&endDate=${endDate}`
+    `/super-admin/earnings/range?startDate=${startDate}&endDate=${endDate}`
   );
 }
 
@@ -416,25 +416,25 @@ export function getDeliveryPartners(
     : "";
 
   return request(
-    `/api/super-admin/delivery-partners${query}`
+    `/super-admin/delivery-partners${query}`
   );
 }
 
 export function getAvailableDeliveryPartners() {
   return request(
-    "/api/super-admin/delivery-partners/available"
+    "/super-admin/delivery-partners/available"
   );
 }
 
 export function getDeliveryPartner(partnerId) {
   return request(
-    `/api/super-admin/delivery-partners/${partnerId}`
+    `/super-admin/delivery-partners/${partnerId}`
   );
 }
 
 export function createDeliveryPartner(body) {
   return request(
-    "/api/super-admin/delivery-partners",
+    "/super-admin/delivery-partners",
     {
       method: "POST",
       body,
@@ -447,7 +447,7 @@ export function updateDeliveryPartner(
   body
 ) {
   return request(
-    `/api/super-admin/delivery-partners/${partnerId}`,
+    `/super-admin/delivery-partners/${partnerId}`,
     {
       method: "PUT",
       body,
@@ -460,7 +460,7 @@ export function updateDeliveryPartnerActive(
   active
 ) {
   return request(
-    `/api/super-admin/delivery-partners/${partnerId}/active`,
+    `/super-admin/delivery-partners/${partnerId}/active`,
     {
       method: "PATCH",
       body: {
@@ -475,7 +475,7 @@ export function updateDeliveryPartnerStatus(
   status
 ) {
   return request(
-    `/api/super-admin/delivery-partners/${partnerId}/status`,
+    `/super-admin/delivery-partners/${partnerId}/status`,
     {
       method: "PATCH",
       body: {
@@ -491,7 +491,7 @@ export function updateDeliveryPartnerStatus(
 
 export function getDeliveryAssignments() {
   return request(
-    "/api/super-admin/delivery-assignments"
+    "/super-admin/delivery-assignments"
   );
 }
 
@@ -499,7 +499,7 @@ export function getDeliveryAssignment(
   assignmentId
 ) {
   return request(
-    `/api/super-admin/delivery-assignments/${assignmentId}`
+    `/super-admin/delivery-assignments/${assignmentId}`
   );
 }
 
@@ -507,7 +507,7 @@ export function getDeliveryAssignmentByOrder(
   orderId
 ) {
   return request(
-    `/api/super-admin/delivery-assignments/order/${orderId}`
+    `/super-admin/delivery-assignments/order/${orderId}`
   );
 }
 
@@ -516,7 +516,7 @@ export function createDeliveryAssignment(
   deliveryPartnerId
 ) {
   return request(
-    "/api/super-admin/delivery-assignments",
+    "/super-admin/delivery-assignments",
     {
       method: "POST",
       body: {
@@ -532,7 +532,7 @@ export function updateDeliveryAssignmentStatus(
   status
 ) {
   return request(
-    `/api/super-admin/delivery-assignments/${assignmentId}/status`,
+    `/super-admin/delivery-assignments/${assignmentId}/status`,
     {
       method: "PATCH",
       body: {
@@ -579,13 +579,13 @@ export function getSupportTickets(
       : "";
 
   return request(
-    `/api/super-admin/support/tickets${query}`
+    `/super-admin/support/tickets${query}`
   );
 }
 
 export function getSupportTicket(ticketId) {
   return request(
-    `/api/super-admin/support/tickets/${ticketId}`
+    `/super-admin/support/tickets/${ticketId}`
   );
 }
 
@@ -594,7 +594,7 @@ export function updateSupportTicketStatus(
   status
 ) {
   return request(
-    `/api/super-admin/support/tickets/${ticketId}/status`,
+    `/super-admin/support/tickets/${ticketId}/status`,
     {
       method: "PATCH",
       body: {
@@ -613,7 +613,7 @@ export function getSuperAdminReport(
   endDate
 ) {
   return request(
-    `/api/super-admin/reports?startDate=${startDate}&endDate=${endDate}`
+    `/super-admin/reports?startDate=${startDate}&endDate=${endDate}`
   );
 }
 
@@ -623,13 +623,13 @@ export function getSuperAdminReport(
 
 export function getPlatformSettings() {
   return request(
-    "/api/super-admin/settings"
+    "/super-admin/settings"
   );
 }
 
 export function updatePlatformSettings(body) {
   return request(
-    "/api/super-admin/settings",
+    "/super-admin/settings",
     {
       method: "PUT",
       body,
