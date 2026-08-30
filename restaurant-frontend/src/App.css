@@ -5563,3 +5563,773 @@ footer strong {
     flex: 1 1 100%;
   }
 }
+/* =========================================================
+   SpiceRoute Responsive Mobile Design
+   Desktop design remains unchanged
+   ========================================================= */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .navbar {
+    padding: 10px 20px;
+  }
+
+  .navbar nav {
+    gap: 12px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    min-height: auto;
+    padding: 65px 35px 70px;
+  }
+
+  .hero-content {
+    max-width: 720px;
+  }
+
+  .hero h1 {
+    font-size: clamp(42px, 8vw, 62px);
+  }
+
+  .hero-visual {
+    min-height: 380px;
+  }
+
+  .food-circle {
+    width: min(350px, 70vw);
+  }
+
+  .content-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-panel {
+    position: static;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   Phone
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* -------------------------
+     MOBILE NAVBAR
+     ------------------------- */
+
+  .navbar {
+    min-height: 64px;
+    width: 100%;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .brand {
+    min-width: 0;
+    gap: 7px;
+  }
+
+  .brand-icon,
+  .brand-logo-image {
+    width: 43px;
+    height: 43px;
+  }
+
+  .brand strong {
+    font-size: 16px;
+  }
+
+  .brand small {
+    margin-top: 2px;
+    font-size: 8px;
+  }
+
+  .navbar nav {
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .navbar nav > a {
+    font-size: 11px;
+  }
+
+  .navbar nav > a:not(.profile-nav-link) {
+    font-size: 0;
+  }
+
+  .navbar nav > a[href="/recommend-food"] {
+    display: none;
+  }
+
+  .cart-button {
+    flex-shrink: 0;
+    gap: 5px;
+    padding: 8px 9px;
+    border-radius: 10px;
+    font-size: 11px;
+  }
+
+  .cart-button span {
+    min-width: 19px;
+    height: 19px;
+    font-size: 10px;
+  }
+
+  /* -------------------------
+     MOBILE HERO
+     ------------------------- */
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    min-height: auto;
+    padding: 55px 20px 45px;
+    gap: 30px;
+  }
+
+  .hero-background-video {
+    object-position: center center;
+  }
+
+  .hero-video-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(20, 14, 10, 0.76) 0%,
+      rgba(20, 14, 10, 0.62) 45%,
+      rgba(20, 14, 10, 0.78) 100%
+    );
+  }
+
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.3px;
+  }
+
+  .hero h1 {
+    width: 100%;
+    max-width: 100%;
+    margin: 12px 0 16px;
+    font-size: clamp(38px, 11vw, 52px);
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+
+  .hero-content > p {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .primary-button {
+    width: 100%;
+    padding: 14px 18px;
+    text-align: center;
+  }
+
+  /* -------------------------
+     HERO STATS
+     ------------------------- */
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 30px;
+  }
+
+  .hero-stats div {
+    min-width: 0;
+    text-align: center;
+  }
+
+  .hero-stats strong {
+    font-size: 17px;
+  }
+
+  .hero-stats span {
+    font-size: 9px;
+    line-height: 1.3;
+  }
+
+  /* -------------------------
+     HERO VISUAL
+     ------------------------- */
+
+  .hero-visual {
+    display: grid;
+    width: 100%;
+    min-height: 290px;
+    place-items: center;
+  }
+
+  .food-circle {
+    width: min(285px, 75vw);
+    border-width: 11px;
+    font-size: 95px;
+  }
+
+  .floating-card {
+    padding: 9px 11px;
+    border-radius: 10px;
+    font-size: 10px;
+  }
+
+  .card-one {
+    top: 8%;
+    left: 2%;
+  }
+
+  .card-two {
+    right: 2%;
+    bottom: 8%;
+  }
+
+  /* -------------------------
+     MENU SECTION
+     ------------------------- */
+
+  .menu-section {
+    width: 100%;
+    padding: 55px 14px;
+  }
+
+  .section-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    width: 100%;
+    margin-bottom: 22px;
+  }
+
+  .section-heading h2,
+  .cart-title h2,
+  .about-section h2 {
+    font-size: 32px;
+    letter-spacing: -1.2px;
+  }
+
+  .search-box {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .category-list {
+    width: 100%;
+    margin-bottom: 25px;
+    padding-bottom: 7px;
+    gap: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .category-list button {
+    padding: 9px 14px;
+    font-size: 12px;
+  }
+
+  /* -------------------------
+     CONTENT + MENU
+     ------------------------- */
+
+  .content-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    gap: 25px;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 16px;
+  }
+
+  .menu-card {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 17px;
+  }
+
+  .menu-image {
+    height: 200px;
+  }
+
+  .menu-card-body {
+    padding: 17px;
+  }
+
+  .menu-card h3 {
+    font-size: 18px;
+  }
+
+  .menu-card p {
+    min-height: auto;
+    font-size: 13px;
+  }
+
+  .menu-card-footer {
+    margin-top: 15px;
+  }
+
+  /* -------------------------
+     MOBILE CART
+     ------------------------- */
+
+  .cart-panel {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    padding: 18px;
+    border-radius: 17px;
+  }
+
+  .cart-title h2 {
+    font-size: 26px;
+  }
+
+  .empty-cart {
+    min-height: 180px;
+  }
+
+  /* -------------------------
+     STATUS
+     ------------------------- */
+
+  .status-message {
+    width: calc(100% - 28px);
+    margin: 15px auto;
+    padding: 20px 15px;
+  }
+
+  /* -------------------------
+     ABOUT
+     ------------------------- */
+
+  .about-section {
+    padding: 60px 20px;
+  }
+}
+
+
+/* =========================================================
+   Very Small Phones
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .navbar {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .brand strong {
+    font-size: 14px;
+  }
+
+  .brand small {
+    font-size: 7px;
+  }
+
+  .brand-icon,
+  .brand-logo-image {
+    width: 38px;
+    height: 38px;
+  }
+
+  .cart-button {
+    padding: 7px;
+    font-size: 10px;
+  }
+
+  .hero {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .hero-content > p {
+    font-size: 13px;
+  }
+
+  .hero-stats strong {
+    font-size: 15px;
+  }
+
+  .hero-stats span {
+    font-size: 8px;
+  }
+
+  .food-circle {
+    width: 250px;
+    font-size: 82px;
+  }
+
+  .menu-section {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+/* =========================================================
+   MOBILE HAMBURGER MENU
+   Desktop remains completely unchanged
+   ========================================================= */
+
+.mobile-menu-toggle {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+
+/* =========================================================
+   MOBILE ONLY
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    min-height: 64px;
+    padding: 8px 12px;
+  }
+
+  /* Keep brand */
+  .brand {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .brand-icon,
+  .brand-logo-image {
+    width: 43px;
+    height: 43px;
+  }
+
+  .brand strong {
+    font-size: 16px;
+  }
+
+  .brand small {
+    font-size: 8px;
+  }
+
+  /* -------------------------
+     MOBILE HAMBURGER
+     ------------------------- */
+
+  .mobile-menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 8px;
+
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    flex-shrink: 0;
+  }
+
+  .mobile-menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+
+    background: var(--dark);
+    border-radius: 999px;
+  }
+
+  /* -------------------------
+     KEEP CART IN HEADER
+     ------------------------- */
+
+  .navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .navbar nav > a {
+    display: none;
+  }
+
+  .navbar nav .customer-nav-actions {
+    display: none;
+  }
+
+  .navbar nav .cart-button {
+    display: flex;
+    flex-shrink: 0;
+
+    padding: 8px 10px;
+    border-radius: 10px;
+
+    font-size: 11px;
+  }
+
+  .cart-button span {
+    min-width: 19px;
+    height: 19px;
+    font-size: 10px;
+  }
+
+  /* -------------------------
+     MOBILE DROPDOWN
+     ------------------------- */
+
+  .mobile-menu {
+    position: absolute;
+
+    top: calc(100% + 6px);
+    left: 12px;
+    right: 12px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 8px;
+
+    background: rgba(255, 250, 244, 0.98);
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    box-shadow: 0 15px 40px rgba(68, 39, 18, 0.15);
+
+    backdrop-filter: blur(16px);
+
+    z-index: 1001;
+  }
+
+  .mobile-menu a {
+    display: block;
+
+    width: 100%;
+
+    padding: 13px 14px;
+
+    color: var(--dark);
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+  }
+
+  .mobile-menu a:hover,
+  .mobile-menu a:active {
+    color: var(--orange);
+    background: var(--orange-light);
+  }
+}
+/* =========================================================
+   MOBILE FINAL ADJUSTMENTS
+   Desktop completely unchanged
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* ==========================================
+     SMALL RIGHT-SIDE MOBILE DROPDOWN
+     ========================================== */
+
+  .mobile-menu {
+    left: auto;
+    right: 10px;
+
+    width: 215px;
+    max-width: calc(100vw - 20px);
+
+    padding: 6px;
+
+    border-radius: 13px;
+  }
+
+  .mobile-menu a {
+    padding: 10px 11px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+
+  /* ==========================================
+     COMPACT MOBILE MENU SECTION
+     ========================================== */
+
+  .menu-section {
+    padding: 38px 12px;
+  }
+
+  .section-heading {
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .section-heading h2 {
+    font-size: 28px;
+    letter-spacing: -1px;
+  }
+
+  /* Search smaller */
+  .search-box {
+    min-height: 44px;
+  }
+
+  .search-box input {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  /* Category buttons slightly smaller */
+  .category-list {
+    gap: 7px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+  }
+
+  .category-list button {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  /* Food cards more compact */
+  .menu-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+  .menu-card {
+    border-radius: 15px;
+  }
+
+ .menu-image {
+  height: 125px;
+}
+
+.menu-card-body {
+  padding: 10px;
+}
+
+.menu-card h3 {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.menu-card p {
+  min-height: 0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.menu-card-footer {
+  margin-top: 10px;
+}
+
+.menu-card-footer strong {
+  font-size: 16px;
+}
+
+.menu-card-footer button {
+  padding: 7px 9px;
+  font-size: 11px;
+}
+
+  .menu-card p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .menu-card-footer {
+    margin-top: 12px;
+  }
+
+  .menu-card-footer strong {
+    font-size: 18px;
+  }
+
+  .menu-card-footer button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+
+/* ==========================================
+   VERY SMALL PHONES
+   ========================================== */
+
+@media (max-width: 380px) {
+
+  .mobile-menu {
+    width: 200px;
+    right: 8px;
+  }
+
+  .mobile-menu a {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+
+  .menu-section {
+    padding: 32px 10px;
+  }
+
+  .section-heading h2 {
+    font-size: 26px;
+  }
+
+  .menu-image {
+    height: 155px;
+  }
+
+  .menu-card-body {
+    padding: 13px;
+  }
+}
