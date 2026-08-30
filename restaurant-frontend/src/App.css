@@ -6333,3 +6333,23 @@ footer strong {
     padding: 13px;
   }
 }
+.mobile-menu-logout {
+  width: 100%;
+  padding: 10px 11px;
+
+  color: #bd2929;
+  background: transparent;
+
+  border: 0;
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-menu-logout:hover,
+.mobile-menu-logout:active {
+  background: #fff1f1;
+}

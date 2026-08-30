@@ -657,7 +657,7 @@ function addToCart(menuItem) {
             Cart <span>{cartCount}</span>
           </button>
         </nav>
-        {mobileMenuOpen && (
+{mobileMenuOpen && (
   <div className="mobile-menu">
     <a
       href="#menu"
@@ -681,12 +681,46 @@ function addToCart(menuItem) {
     </a>
 
     {customerName ? (
-      <a
-        href="/customer-profile"
-        onClick={() => setMobileMenuOpen(false)}
-      >
-        👤 My Profile
-      </a>
+      <>
+        <a
+          href="/customer-profile"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          👤 My Profile
+        </a>
+
+        <a
+          href="/my-orders"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          🛒 My Orders
+        </a>
+
+        <a
+          href="/wishlist"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          ❤️ My Wishlist
+        </a>
+
+        <a
+          href="/support"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          🎧 Customer Support
+        </a>
+
+        <button
+          type="button"
+          onClick={() => {
+            setMobileMenuOpen(false);
+            logoutCustomer();
+          }}
+          className="mobile-menu-logout"
+        >
+          🚪 Logout
+        </button>
+      </>
     ) : (
       <a
         href="/customer-login"
