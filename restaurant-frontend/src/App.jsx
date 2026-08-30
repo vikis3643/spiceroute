@@ -10,6 +10,7 @@ const API_BASE_URL =
   `${import.meta.env.VITE_API_BASE_URL}`;
 
 function App() {
+   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categories, setCategories] =
     useState([]);
 
@@ -544,7 +545,19 @@ function addToCart(menuItem) {
         </small>
       </span>
     </a>
-
+<button
+  type="button"
+  className="mobile-menu-toggle"
+  aria-label="Toggle navigation menu"
+  aria-expanded={mobileMenuOpen}
+  onClick={() =>
+    setMobileMenuOpen((current) => !current)
+  }
+>
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
               <nav>
           <a href="#menu">Menu</a>
 
@@ -644,6 +657,46 @@ function addToCart(menuItem) {
             Cart <span>{cartCount}</span>
           </button>
         </nav>
+        {mobileMenuOpen && (
+  <div className="mobile-menu">
+    <a
+      href="#menu"
+      onClick={() => setMobileMenuOpen(false)}
+    >
+      Menu
+    </a>
+
+    <a
+      href="#about"
+      onClick={() => setMobileMenuOpen(false)}
+    >
+      About
+    </a>
+
+    <a
+      href="/recommend-food"
+      onClick={() => setMobileMenuOpen(false)}
+    >
+      ✨ Recommend Food
+    </a>
+
+    {customerName ? (
+      <a
+        href="/customer-profile"
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        👤 My Profile
+      </a>
+    ) : (
+      <a
+        href="/customer-login"
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        Customer Login
+      </a>
+    )}
+  </div>
+)}
       </header>
 
       <main>
