@@ -1,11 +1,15 @@
 package com.aditya.restaurant_backend.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.aditya.restaurant_backend.entity.CustomerOrder;
@@ -13,30 +17,43 @@ import com.aditya.restaurant_backend.entity.OrderItem;
 import com.aditya.restaurant_backend.entity.OrderTiming;
 import com.aditya.restaurant_backend.entity.PaymentMethod;
 import com.aditya.restaurant_backend.entity.PaymentStatus;
+import com.google.api.services.gmail.Gmail;
+import com.google.api.services.gmail.model.Message;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    private final Gmail gmail;
     private final String mailUsername;
     private final String frontendBaseUrl;
-public EmailService(
-        JavaMailSender mailSender,
-        @Value("${spring.mail.username}")
-        String mailUsername,
-        @Value("${app.frontend.base-url}")
-        String frontendBaseUrl
-) {
-    this.mailSender = mailSender;
-    this.mailUsername = mailUsername;
-    this.frontendBaseUrl = frontendBaseUrl;
-}
+
+    public EmailService(
+            Gmail gmail,
+            @Value("${spring.mail.username}")
+            String mailUsername,
+            @Value("${app.frontend.base-url}")
+            String frontendBaseUrl
+    ) {
+        this.gmail = gmail;
+        this.mailUsername = mailUsername;
+        this.frontendBaseUrl = frontendBaseUrl;
+    }
+
+    // =========================================================
+    // PASSWORD RESET EMAIL
+    // =========================================================
 
     public void sendPasswordResetEmail(
             String customerEmail,
             String customerName,
             String resetToken
     ) {
+
         String resetLink =
                 frontendBaseUrl
                         + "/reset-password?token="
@@ -65,12 +82,17 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        mailSender.send(message);
+        sendEmail(message);
     }
+
+    // =========================================================
+    // ORDER CONFIRMATION EMAIL
+    // =========================================================
 
     public void sendOrderConfirmationEmail(
             CustomerOrder order
     ) {
+
         if (order.getCustomerAccount() == null) {
             return;
         }
@@ -98,77 +120,87 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        mailSender.send(message);
+        sendEmail(message);
     }
 
-  public void sendOrderStatusEmail(
-        CustomerOrder order
-) {
-    if (order.getCustomerAccount() == null) {
-        return;
-    }
+    // =========================================================
+    // ORDER STATUS EMAIL
+    // =========================================================
 
-    String readableStatus =
-            order.getStatus()
-                    .name()
-                    .replace("_", " ");
+    public void sendOrderStatusEmail(
+            CustomerOrder order
+    ) {
 
-    String reviewSection = "";
+        if (order.getCustomerAccount() == null) {
+            return;
+        }
 
-    if (order.getStatus()
-            == com.aditya.restaurant_backend.entity.OrderStatus.DELIVERED) {
+        String readableStatus =
+                order.getStatus()
+                        .name()
+                        .replace("_", " ");
 
-        String reviewLink =
-                frontendBaseUrl
-                        + "/review?orderId="
-                        + order.getId();
+        String reviewSection = "";
 
-        reviewSection =
-                "\n\nHow was your SpiceRoute experience?\n\n"
-                        + "Food quality: ☆ ☆ ☆ ☆ ☆\n"
-                        + "Customer service: ☆ ☆ ☆ ☆ ☆\n\n"
-                        + "Give your review using this secure link:\n"
-                        + reviewLink
+        if (order.getStatus()
+                == com.aditya.restaurant_backend.entity.OrderStatus.DELIVERED) {
+
+            String reviewLink =
+                    frontendBaseUrl
+                            + "/review?orderId="
+                            + order.getId();
+
+            reviewSection =
+                    "\n\nHow was your SpiceRoute experience?\n\n"
+                            + "Food quality: ☆ ☆ ☆ ☆ ☆\n"
+                            + "Customer service: ☆ ☆ ☆ ☆ ☆\n\n"
+                            + "Give your review using this secure link:\n"
+                            + reviewLink
+                            + "\n\n"
+                            + "Only the customer who placed this order "
+                            + "can submit its review.";
+        }
+
+        SimpleMailMessage message =
+                createMessage(
+                        order.getCustomerAccount()
+                                .getEmail(),
+                        "Order #"
+                                + order.getId()
+                                + " status: "
+                                + readableStatus
+                );
+
+        message.setText(
+                "Hello "
+                        + order.getCustomerName()
+                        + ",\n\n"
+                        + "Your SpiceRoute order #"
+                        + order.getId()
+                        + " is now:\n\n"
+                        + readableStatus
                         + "\n\n"
-                        + "Only the customer who placed this order "
-                        + "can submit its review.";
+                        + createScheduleSummary(order)
+                        + "\n"
+                        + createPaymentSummary(order)
+                        + reviewSection
+                        + "\n\nTrack the latest progress here:\n"
+                        + frontendBaseUrl
+                        + "/my-orders\n\n"
+                        + "SpiceRoute Restaurant"
+        );
+
+        sendEmail(message);
     }
 
-    SimpleMailMessage message =
-            createMessage(
-                    order.getCustomerAccount()
-                            .getEmail(),
-                    "Order #"
-                            + order.getId()
-                            + " status: "
-                            + readableStatus
-            );
-
-    message.setText(
-            "Hello "
-                    + order.getCustomerName()
-                    + ",\n\n"
-                    + "Your SpiceRoute order #"
-                    + order.getId()
-                    + " is now:\n\n"
-                    + readableStatus
-                    + "\n\n"
-                    + createScheduleSummary(order)
-                    + "\n"
-                    + createPaymentSummary(order)
-                    + reviewSection
-                    + "\n\nTrack the latest progress here:\n"
-                    + frontendBaseUrl
-                    + "/my-orders\n\n"
-                    + "SpiceRoute Restaurant"
-    );
-
-    mailSender.send(message);
-}
+    // =========================================================
+    // ORDER CANCELLATION EMAIL
+    // =========================================================
 
     public void sendOrderCancellationEmail(
             CustomerOrder order
     ) {
+
         if (order.getCustomerAccount() == null) {
             return;
         }
@@ -204,15 +236,21 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        mailSender.send(message);
+        sendEmail(message);
     }
-        public void sendSupportTicketCreatedEmail(
+
+    // =========================================================
+    // SUPPORT TICKET CREATED
+    // =========================================================
+
+    public void sendSupportTicketCreatedEmail(
             Long ticketId,
             String customerName,
             String customerEmail,
             String subject
     ) {
-        // Confirmation email to customer
+
+        // Customer email
         SimpleMailMessage customerMessage =
                 createMessage(
                         customerEmail,
@@ -240,10 +278,9 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        mailSender.send(customerMessage);
+        sendEmail(customerMessage);
 
-
-        // Notification email to restaurant/admin
+        // Admin notification
         SimpleMailMessage adminMessage =
                 createMessage(
                         mailUsername,
@@ -271,9 +308,12 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        mailSender.send(adminMessage);
+        sendEmail(adminMessage);
     }
 
+    // =========================================================
+    // SUPPORT ADMIN REPLY
+    // =========================================================
 
     public void sendSupportAdminReplyEmail(
             Long ticketId,
@@ -282,6 +322,7 @@ public EmailService(
             String subject,
             String reply
     ) {
+
         SimpleMailMessage message =
                 createMessage(
                         customerEmail,
@@ -309,9 +350,12 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        mailSender.send(message);
+        sendEmail(message);
     }
 
+    // =========================================================
+    // SUPPORT CUSTOMER REPLY
+    // =========================================================
 
     public void sendSupportCustomerReplyEmail(
             Long ticketId,
@@ -320,6 +364,7 @@ public EmailService(
             String subject,
             String reply
     ) {
+
         SimpleMailMessage message =
                 createMessage(
                         mailUsername,
@@ -350,9 +395,12 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        mailSender.send(message);
+        sendEmail(message);
     }
 
+    // =========================================================
+    // SUPPORT STATUS CHANGED
+    // =========================================================
 
     public void sendSupportStatusChangedEmail(
             Long ticketId,
@@ -361,6 +409,7 @@ public EmailService(
             String subject,
             String status
     ) {
+
         String readableStatus =
                 status.replace("_", " ");
 
@@ -394,79 +443,84 @@ public EmailService(
                         + "SpiceRoute Restaurant"
         );
 
-        mailSender.send(message);
+        sendEmail(message);
     }
-    // ==========================================
-// RESTAURANT APPROVAL / ADMIN CREDENTIALS
-// ==========================================
 
-public void sendRestaurantApprovalEmail(
-        String ownerEmail,
-        String ownerName,
-        String restaurantName,
-        String temporaryPassword
-) {
+    // =========================================================
+    // RESTAURANT APPROVAL / ADMIN CREDENTIALS
+    // =========================================================
 
-    String adminLoginUrl =
-            frontendBaseUrl
-                    + "/admin";
+    public void sendRestaurantApprovalEmail(
+            String ownerEmail,
+            String ownerName,
+            String restaurantName,
+            String temporaryPassword
+    ) {
 
-    SimpleMailMessage message =
-            createMessage(
-                    ownerEmail,
-                    "Your SpiceRoute restaurant has been approved"
-            );
+        String adminLoginUrl =
+                frontendBaseUrl
+                        + "/admin";
 
-    message.setText(
-            "Hello "
-                    + ownerName
-                    + ",\n\n"
+        SimpleMailMessage message =
+                createMessage(
+                        ownerEmail,
+                        "Your SpiceRoute restaurant has been approved"
+                );
 
-                    + "Congratulations! Your restaurant application "
-                    + "has been approved by the SpiceRoute Super Admin.\n\n"
+        message.setText(
+                "Hello "
+                        + ownerName
+                        + ",\n\n"
 
-                    + "Restaurant: "
-                    + restaurantName
-                    + "\n\n"
+                        + "Congratulations! Your restaurant application "
+                        + "has been approved by the SpiceRoute Super Admin.\n\n"
 
-                    + "Your Restaurant Admin account is now active.\n\n"
+                        + "Restaurant: "
+                        + restaurantName
+                        + "\n\n"
 
-                    + "ADMIN LOGIN DETAILS\n"
-                    + "------------------------------\n"
-                    + "Login URL: "
-                    + adminLoginUrl
-                    + "\n"
+                        + "Your Restaurant Admin account is now active.\n\n"
 
-                    + "User ID / Email: "
-                    + ownerEmail
-                    + "\n"
+                        + "ADMIN LOGIN DETAILS\n"
+                        + "------------------------------\n"
+                        + "Login URL: "
+                        + adminLoginUrl
+                        + "\n"
 
-                    + "Temporary Password: "
-                    + temporaryPassword
-                    + "\n"
-                    + "------------------------------\n\n"
+                        + "User ID / Email: "
+                        + ownerEmail
+                        + "\n"
 
-                    + "For security, you must change this temporary "
-                    + "password after your first login.\n\n"
+                        + "Temporary Password: "
+                        + temporaryPassword
+                        + "\n"
+                        + "------------------------------\n\n"
 
-                    + "After changing your password, you can manage "
-                    + "your restaurant menu, categories, orders, "
-                    + "offers, reviews, sales and other restaurant "
-                    + "operations from your admin dashboard.\n\n"
+                        + "For security, you must change this temporary "
+                        + "password after your first login.\n\n"
 
-                    + "Welcome to SpiceRoute!\n\n"
+                        + "After changing your password, you can manage "
+                        + "your restaurant menu, categories, orders, "
+                        + "offers, reviews, sales and other restaurant "
+                        + "operations from your admin dashboard.\n\n"
 
-                    + "SpiceRoute Team"
-    );
+                        + "Welcome to SpiceRoute!\n\n"
 
-    mailSender.send(
-            message
-    );
-}
+                        + "SpiceRoute Team"
+        );
+
+        sendEmail(message);
+    }
+
+    // =========================================================
+    // CREATE EMAIL
+    // =========================================================
+
     private SimpleMailMessage createMessage(
             String recipient,
             String subject
     ) {
+
         SimpleMailMessage message =
                 new SimpleMailMessage();
 
@@ -476,13 +530,107 @@ public void sendRestaurantApprovalEmail(
 
         return message;
     }
+
+    // =========================================================
+    // GMAIL API EMAIL SENDER
+    // =========================================================
+
+    private void sendEmail(
+            SimpleMailMessage message
+    ) {
+
+        try {
+
+            Properties properties =
+                    new Properties();
+
+            Session session =
+                    Session.getInstance(properties);
+
+            MimeMessage mimeMessage =
+                    new MimeMessage(session);
+
+            // FROM
+            mimeMessage.setFrom(
+                    new InternetAddress(mailUsername)
+            );
+
+            // TO
+            mimeMessage.setRecipients(
+                    MimeMessage.RecipientType.TO,
+                    InternetAddress.parse(
+                            String.join(
+                                    ",",
+                                    message.getTo()
+                            )
+                    )
+            );
+
+            // SUBJECT
+            mimeMessage.setSubject(
+                    message.getSubject(),
+                    StandardCharsets.UTF_8.name()
+            );
+
+            // BODY
+            mimeMessage.setText(
+                    message.getText(),
+                    StandardCharsets.UTF_8.name()
+            );
+
+            // Convert MIME email to bytes
+            ByteArrayOutputStream outputStream =
+                    new ByteArrayOutputStream();
+
+            mimeMessage.writeTo(outputStream);
+
+            // Gmail API requires URL-safe Base64
+            String encodedEmail =
+                    Base64.getUrlEncoder()
+                            .withoutPadding()
+                            .encodeToString(
+                                    outputStream.toByteArray()
+                            );
+
+            Message gmailMessage =
+                    new Message();
+
+            gmailMessage.setRaw(
+                    encodedEmail
+            );
+
+            // Send email through Gmail API
+            gmail.users()
+                    .messages()
+                    .send(
+                            "me",
+                            gmailMessage
+                    )
+                    .execute();
+
+        } catch (MessagingException | IOException e) {
+
+            throw new IllegalStateException(
+                    "Failed to send email using Gmail API",
+                    e
+            );
+        }
+    }
+
+    // =========================================================
+    // ORDER SUMMARY
+    // =========================================================
+
     private String createOrderSummary(
             CustomerOrder order
     ) {
+
         StringBuilder summary =
                 new StringBuilder();
 
-        summary.append("Order number: #")
+        summary.append(
+                        "Order number: #"
+                )
                 .append(order.getId())
                 .append("\n\nItems:\n");
 
@@ -551,12 +699,18 @@ public void sendRestaurantApprovalEmail(
         return summary.toString();
     }
 
+    // =========================================================
+    // DISCOUNT SUMMARY
+    // =========================================================
+
     private String createDiscountSummary(
             CustomerOrder order
     ) {
+
         if (order.getDiscountAmount() == null
                 || order.getDiscountAmount()
                 .compareTo(BigDecimal.ZERO) <= 0) {
+
             return "";
         }
 
@@ -590,11 +744,17 @@ public void sendRestaurantApprovalEmail(
         return discountSummary.toString();
     }
 
+    // =========================================================
+    // ORDER SCHEDULE SUMMARY
+    // =========================================================
+
     private String createScheduleSummary(
             CustomerOrder order
     ) {
+
         if (order.getOrderTiming()
                 != OrderTiming.SCHEDULED) {
+
             return "Order timing: Order now\n";
         }
 
@@ -620,6 +780,7 @@ public void sendRestaurantApprovalEmail(
                 .append("\n");
 
         if (order.getScheduledFor() != null) {
+
             scheduleSummary.append(
                             "Scheduled delivery: "
                     )
@@ -632,6 +793,7 @@ public void sendRestaurantApprovalEmail(
 
         if (order.getPreparationStartAt()
                 != null) {
+
             scheduleSummary.append(
                             "Preparation begins: "
                     )
@@ -645,9 +807,14 @@ public void sendRestaurantApprovalEmail(
         return scheduleSummary.toString();
     }
 
+    // =========================================================
+    // PAYMENT SUMMARY
+    // =========================================================
+
     private String createPaymentSummary(
             CustomerOrder order
     ) {
+
         StringBuilder paymentSummary =
                 new StringBuilder();
 
@@ -673,7 +840,7 @@ public void sendRestaurantApprovalEmail(
             if (order.getTransactionId()
                     != null
                     && !order.getTransactionId()
-                            .isBlank()) {
+                    .isBlank()) {
 
                 paymentSummary.append(
                                 "Demo transaction ID: "
@@ -702,9 +869,14 @@ public void sendRestaurantApprovalEmail(
         return paymentSummary.toString();
     }
 
+    // =========================================================
+    // PAYMENT STATUS
+    // =========================================================
+
     private String formatPaymentStatus(
             CustomerOrder order
     ) {
+
         if (order.getPaymentStatus() == null) {
             return "NOT AVAILABLE";
         }
@@ -714,13 +886,18 @@ public void sendRestaurantApprovalEmail(
                 .replace("_", " ");
     }
 
+    // =========================================================
+    // DELIVERY FEE
+    // =========================================================
+
     private String formatDeliveryFee(
             BigDecimal deliveryFee
     ) {
+
         if (deliveryFee == null
                 || deliveryFee.compareTo(
-                        BigDecimal.ZERO
-                ) == 0) {
+                BigDecimal.ZERO
+        ) == 0) {
 
             return "Free";
         }
@@ -728,9 +905,14 @@ public void sendRestaurantApprovalEmail(
         return formatPrice(deliveryFee);
     }
 
+    // =========================================================
+    // PRICE FORMAT
+    // =========================================================
+
     private String formatPrice(
             BigDecimal amount
     ) {
+
         if (amount == null) {
             return "₹0.00";
         }
