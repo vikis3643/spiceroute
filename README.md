@@ -1,246 +1,185 @@
 # 🌶️ SpiceRoute — Restaurant Ordering System
 
-> A full-stack restaurant ordering platform built with React, Spring Boot, MySQL, JWT Authentication, Google Sign-In, and Gmail API.
+<p align="center">
+  <img src="https://img.shields.io/badge/RESTAURANT%20ORDERING%20SYSTEM-ff69b4?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+  <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white" />
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white" />
+</p>
+
+<p align="center">
+  <strong>Order • Authenticate • Manage • Track</strong>
+</p>
+
+<p align="center">
+  A full-stack restaurant ordering platform designed to provide a smooth online food-ordering experience with secure authentication and cloud deployment.
+</p>
+
+<p align="center">
+  <a href="https://spiceroute-frontend.onrender.com">
+    <img src="https://img.shields.io/badge/🚀_LIVE_DEMO-Visit_Website-00C7B7?style=for-the-badge" />
+  </a>
+  <a href="https://github.com/vikis3643/SpiceRoute">
+    <img src="https://img.shields.io/badge/💻_SOURCE_CODE-GitHub-181717?style=for-the-badge&logo=github" />
+  </a>
+</p>
 
 ---
 
-## 🚀 Live Project
+## 🖥️ Project Overview
 
-**Frontend:** https://spiceroute-frontend.onrender.com
+**SpiceRoute** is a responsive full-stack web application that helps users experience a seamless online food-ordering process.
 
-**Backend:** https://spiceroute-k529.onrender.com
+The application provides restaurant ordering, JWT authentication, order status tracking, password recovery via Gmail API, and Google Sign-in — all through a clean interface powered by React, HTML/CSS, and Spring Boot.
 
----
+### 🎯 What makes it different?
 
-## 📌 About
+Instead of being only a basic CRUD application, this project combines:
 
-**SpiceRoute** is a full-stack restaurant ordering system designed to provide a smooth online food-ordering experience.
-
-The project demonstrates how a React frontend communicates with a Spring Boot REST API, how authentication is handled, how orders are stored in MySQL, and how the application is deployed to the cloud.
-
-### 🎯 Main Goals
-
-- Build a real-world full-stack application
-- Implement REST APIs using Spring Boot
-- Connect React with a Java backend
-- Manage restaurant orders and order status
-- Implement JWT-based authentication
-- Support Google Sign-In
-- Implement password reset through Gmail API
-- Deploy the application using Render
+> 🔐 Secure JWT Authentication
+> 🔵 Google OAuth Sign-In
+> 🔑 Gmail API Password Reset
+> 🍽️ Restaurant Ordering Flow
+> 📦 Order Tracking & Management
+> ☁️ Cloud Deployment (Render)
 
 ---
 
-## ✨ Key Features
+## 🌐 Live Preview
 
-| Feature | Description |
-|---|---|
-| 👤 User Authentication | Secure login and registration |
-| 🔐 JWT Security | Token-based authentication |
-| 🔵 Google Sign-In | Login using Google OAuth |
-| 🔑 Password Reset | Reset password through email |
-| 🍽️ Restaurant Ordering | Browse and place food orders |
-| 🛒 Order Management | Create and manage customer orders |
-| 📦 Order Status | Track order/delivery status |
-| 💾 MySQL Database | Persistent application data |
-| 📧 Gmail Integration | Password reset email delivery |
-| ☁️ Cloud Deployment | Frontend and backend deployed on Render |
+### 🚀 Try It Yourself
+
+**Live Frontend:**
+https://spiceroute-frontend.onrender.com
+
+**Live Backend API:**
+https://spiceroute-k529.onrender.com
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Core Features
 
-### Frontend
+### 👤 Secure User Authentication
 
-- React
-- Vite
-- JavaScript / JSX
-- HTML
-- CSS
-
-### Backend
-
-- Java
-- Spring Boot
-- Spring Data JPA
-- Hibernate
-- REST API
-- JWT
-
-### Database
-
-- MySQL
-
-### Authentication & Services
-
-- JWT Authentication
-- Google Sign-In
-- Google OAuth
-- Gmail API
-
-### Development & Deployment
-
-- Git
-- GitHub
-- Render
-
----
-
-## 🏗️ Architecture
+Authenticate users using multiple methods:
 
 ```text
-                    ┌─────────────────────┐
-                    │        User         │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   React Frontend    │
-                    │      + Vite         │
-                    └──────────┬──────────┘
-                               │
-                         REST API / HTTP
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   Spring Boot API   │
-                    │       Backend       │
-                    └──────┬───────┬──────┘
-                           │       │
-                           ▼       ▼
-                 ┌─────────────┐  ┌─────────────────┐
-                 │    MySQL    │  │ Google & Gmail  │
-                 │   Database  │  │      APIs       │
-                 └─────────────┘  └─────────────────┘
+┌─────────────────────────────┐
+│       LOGIN OPTIONS         │
+├─────────────────────────────┤
+│ 📧 Standard Email/Password  │
+│ 🔵 Google OAuth Sign-In     │
+│ 🔑 Gmail Password Reset     │
+└─────────────────────────────┘
+```
+
+Password reset links are securely generated and sent via Gmail API, configured with a **15-minute expiration period**.
+
+---
+
+### 🍽️ Order Management
+
+The core functionality tracks the entire lifecycle of an order:
+
+| Phase | Description |
+| :--- | :--- |
+| **Browse** | View menus and select food items |
+| **Cart** | Add items and manage quantities |
+| **Order** | Place secure orders to the database |
+| **Track** | Monitor real-time order status |
+
+---
+
+### 🗄️ Database Integration
+
+The application maintains data persistence using **MySQL**:
+
+* User credentials and profiles
+* Restaurant and menu information
+* Order history and cart items
+* Complex entity relationships via Hibernate
+
+---
+
+# 🛡️ Security Architecture
+
+One of the main technical aspects of this project is secure client-server communication.
+
+Instead of basic sessions, the application uses:
+
+```java
+Jwts.builder()
+```
+
+for generating secure JSON Web Tokens.
+
+The user credentials and API endpoints are protected using **Spring Security**.
+
+### Security Flow
+
+```text
+        User Credentials
+             │
+             ▼
+     Backend Validation
+             │
+             ▼
+   Secure Token Generation
+       (JWT Creation)
+             │
+             ▼
+    Frontend State Storage
+             │
+             ▼
+    🔐 Authenticated APIs
+             │
+       ┌─────┴─────┐
+       ▼           ▼
+     Order       Profile
+   Management    Access
 ```
 
 ---
 
-## 🔐 Authentication
+# 🧰 Technology Stack
 
-SpiceRoute uses multiple authentication mechanisms.
+<p align="center">
 
-### JWT Authentication
+| Technology | Role |
+| --- | --- |
+| ⚛️ **React & Vite** | Frontend architecture & fast bundling |
+| 🟧 **HTML5** | Application structure & semantic markup |
+| 🟦 **CSS3** | UI styling, animations & responsive layout |
+| 🟨 **JavaScript (JSX)**| Dynamic frontend application logic |
+| ☕ **Java** | Core backend programming language |
+| 🟩 **Spring Boot** | Backend REST API & server logic |
+| 🍃 **Spring Data JPA**| Database ORM & Hibernate implementation |
+| 🐬 **MySQL** | Relational database storage |
+| 🔐 **JWT & OAuth** | Secure token & Social authentication |
+| 📧 **Gmail API** | Transactional email delivery |
+| 🚀 **Render** | Cloud hosting & deployment |
 
-The application uses **JSON Web Tokens** for authenticated API requests.
-
-```text
-User Login
-    ↓
-Backend validates credentials
-    ↓
-JWT Token generated
-    ↓
-Frontend stores authentication state
-    ↓
-Authenticated requests include token
-```
-
-### Google Sign-In
-
-Users can authenticate using their Google account.
-
-```text
-Google Sign-In
-      ↓
-Frontend receives Google credential
-      ↓
-POST /google
-      ↓
-Spring Boot verifies credential
-      ↓
-User authenticated
-```
-
-### Password Reset
-
-The application provides password recovery through Gmail API integration.
-
-```text
-Forgot Password
-      ↓
-Reset request
-      ↓
-Reset email generated
-      ↓
-Gmail API
-      ↓
-User receives reset link
-      ↓
-Password updated
-```
-
-> Password reset links are configured with a **15-minute expiration period**.
+</p>
 
 ---
 
-## 🍽️ Order Management
+# ☁️ Deployment Architecture
 
-The core functionality of SpiceRoute is restaurant ordering.
+The application is deployed separately for optimal performance:
 
-### Order Flow
+* Frontend deployed on Render Static Site
+* Backend deployed on Render Web Service
+* Environment variables securely injected without hardcoding
 
-```text
-Browse Menu
-     ↓
-Select Food
-     ↓
-Add Items
-     ↓
-Place Order
-     ↓
-Save Order
-     ↓
-Save Order Items
-     ↓
-Track Order Status
-```
-
-The backend maintains order information and related order items in the MySQL database.
+The frontend and backend communicate seamlessly over HTTPS.
 
 ---
 
-## 🔌 Backend API
-
-The backend is implemented as a REST API using Spring Boot.
-
-### Example Authentication Endpoint
-
-| Method | Endpoint | Purpose |
-|---|---|---|
-| POST | `/google` | Verify Google Sign-In credential |
-
-Additional backend APIs handle authentication, users, orders, order items, and other application functionality.
-
----
-
-## 🗄️ Database
-
-SpiceRoute uses **MySQL** as its relational database.
-
-The backend communicates with MySQL through:
-
-```text
-Spring Boot
-     ↓
-Spring Data JPA
-     ↓
-Hibernate
-     ↓
-MySQL
-```
-
-### Database Responsibilities
-
-- Store user information
-- Store authentication-related data
-- Store restaurant/order information
-- Store order items
-- Maintain relationships between application entities
-
----
-
-## 📁 Project Structure
+# 📂 Project Structure
 
 ```text
 spiceRoute/
@@ -251,79 +190,47 @@ spiceRoute/
 │       ├── .mvn/
 │       ├── Dockerfile
 │       ├── pom.xml
-│       ├── mvnw
-│       └── mvnw.cmd
+│       └── mvnw
 │
 ├── restaurant-frontend/
 │   ├── public/
 │   ├── src/
 │   ├── package.json
-│   ├── package-lock.json
 │   ├── vite.config.js
 │   └── index.html
 │
 ├── render.yaml
-├── .gitignore
 └── README.md
 ```
 
 ---
 
-## ⚙️ Environment Variables
+# ⚡ Getting Started
 
-Sensitive credentials should **never** be committed to GitHub.
-
-The application uses environment variables for:
-
-- Database configuration
-- JWT secret
-- Google Client ID
-- Gmail OAuth configuration
-- Frontend base URL
-
-Example:
-
-```text
-DB_URL=your_database_url
-DB_USERNAME=your_database_username
-DB_PASSWORD=your_database_password
-
-JWT_SECRET=your_secret
-
-GOOGLE_CLIENT_ID=your_google_client_id
-
-FRONTEND_URL=your_frontend_url
-```
-
-> Never place real passwords, API keys, OAuth secrets, or JWT secrets inside `README.md`.
-
----
-
-## 💻 Run Locally
-
-### 1. Clone Repository
+## 1. Clone Repository
 
 ```bash
-git clone <your-github-repository-url>
+git clone https://github.com/vikis3643/SpiceRoute.git
+```
+
+## 2. Enter Project
+
+```bash
 cd spiceRoute
 ```
 
-### 2. Start Backend
+## 3. Configure Environment
+
+Create required environment variables for DB credentials, JWT secret, Google Client ID, and Gmail API keys.
+
+## 4. Run Backend
 
 ```bash
 cd restaurant-backend/restaurant-backend
 mvnw.cmd spring-boot:run
 ```
 
-The Spring Boot backend runs on:
-
-```text
-http://localhost:8080
-```
-
-### 3. Start Frontend
-
-Open another terminal:
+## 5. Run Frontend
 
 ```bash
 cd restaurant-frontend
@@ -331,219 +238,112 @@ npm install
 npm run dev
 ```
 
-Vite will provide the local frontend URL in the terminal.
-
 ---
 
-## 🌐 Deployment
-
-SpiceRoute is deployed using **Render**.
-
-### Deployment Architecture
+# 📊 Feature Overview
 
 ```text
-GitHub Repository
-       │
-       ├──────────────────┐
-       │                  │
-       ▼                  ▼
-React Frontend      Spring Boot Backend
-       │                  │
-       ▼                  ▼
-Render Static Site   Render Web Service
-                          │
-                          ▼
-                       MySQL
-```
-
-### Current Deployment
-
-**Frontend**
-
-https://spiceroute-frontend.onrender.com
-
-**Backend**
-
-https://spiceroute-k529.onrender.com
-
-Environment variables are configured separately on the deployment platform.
-
----
-
-## 🔒 Security Practices
-
-- JWT-based authentication
-- Environment-based configuration
-- No hardcoded production credentials
-- OAuth-based Google authentication
-- Expiring password reset links
-- Sensitive configuration excluded from Git
-- Separate frontend and backend deployment configuration
-
----
-
-## 🧪 Testing & Verification
-
-The project has been tested across its major application flows.
-
-### Verified Areas
-
-- Backend startup
-- MySQL database connection
-- User authentication
-- JWT authentication
-- Google Sign-In
-- Password reset
-- Gmail email delivery
-- Order creation
-- Order item storage
-- Frontend-backend communication
-- Production deployment
-
----
-
-## 📊 Current Project Scope
-
-### Implemented
-
-```text
-Authentication       ✅
-JWT Security         ✅
-Google Sign-In       ✅
-Password Reset       ✅
-Restaurant Ordering  ✅
-Order Management     ✅
-Order Status         ✅
-MySQL Integration    ✅
-React Frontend       ✅
-Spring Boot Backend  ✅
-Cloud Deployment     ✅
+                    🌶️ SPICEROUTE PLATFORM
+                              │
+             ┌────────────────┼────────────────┐
+             │                │                │
+             ▼                ▼                ▼
+       AUTHENTICATION      ORDERING        MANAGEMENT
+             │                │                │
+      ┌──────┼──────┐    ┌────┴────┐    ┌─────┼─────┐
+      ▼      ▼      ▼    ▼         ▼    ▼     ▼     ▼
+     JWT   Google Reset Menu    Checkout API  Cloud  DB
 ```
 
 ---
 
-## 🔮 Future Scope
+# 🚀 Future Roadmap
 
-- Online payment gateway
-- Restaurant/admin dashboard
-- Food search and filtering
-- Reviews and ratings
-- Improved order history
-- Real-time order tracking
-- Notifications
-- Delivery partner module
-- Restaurant analytics
-- AI-powered food recommendations
-- AI chatbot for customer support
-
----
-
-## 🤖 Future AI Integration
-
-A future version of SpiceRoute can introduce:
-
-### AI Food Recommendation
-
-Recommend dishes based on previous orders, user preferences, popular items, and time of day.
-
-### AI Customer Assistant
-
-A chatbot could help users find food, understand menu items, track orders, and answer restaurant-related questions.
-
-### Smart Analytics
-
-AI could help restaurants understand popular dishes, customer behavior, peak ordering periods, and sales trends.
-
----
-
-## 🎓 Learning Outcomes
-
-This project demonstrates practical knowledge of:
-
-- Java development
-- Spring Boot
-- REST API development
-- Spring Data JPA
-- Hibernate
-- MySQL
-- React
-- JavaScript
-- Authentication
-- JWT
-- OAuth
-- Gmail API
-- Git & GitHub
-- Environment variables
-- Cloud deployment
-- Frontend-backend integration
-
----
-
-## 💼 Why This Project Matters
-
-SpiceRoute demonstrates the integration of multiple technologies into one complete application:
+The project can be extended with:
 
 ```text
-Frontend
-   +
-Backend
-   +
-Database
-   +
-Authentication
-   +
-External APIs
-   +
-Cloud Deployment
+☐ Online payment gateway
+☐ Restaurant/admin dashboard
+☐ Real-time order tracking
+☐ Delivery partner module
+☐ AI-powered food recommendations
+☐ AI customer support chatbot
+☐ Food search and filtering
+☐ Restaurant analytics
 ```
 
-This makes the project suitable for:
+---
 
-- Academic project submission
-- College viva
-- Java Full Stack portfolio
-- GitHub portfolio
-- Placement discussions
-- Backend development practice
+# 📚 What I Learned
+
+Building this project helped demonstrate practical knowledge of:
+
+* Java & Spring Boot REST APIs
+* React and Vite frontend architecture
+* HTML5 structure and CSS3 responsive design
+* JavaScript ES6+ logic and state management
+* JWT Authentication flow
+* Google OAuth integration
+* Gmail API configuration
+* MySQL database relationships (JPA/Hibernate)
+* Cloud deployment on Render
+* Environment variable security
 
 ---
 
-## 📌 Project Highlights
+# 👨‍💻 Developer
 
-| Category | Technology |
-|---|---|
-| Architecture | Full Stack |
-| Backend | Java + Spring Boot |
-| Frontend | React + Vite |
-| Database | MySQL |
-| Authentication | JWT + Google Sign-In |
-| Email Service | Gmail API |
-| Deployment | Render |
-| Source Control | Git + GitHub |
+## Vikash Kumar Jha
 
----
+**BCA Student | Aspiring Full Stack Java Developer**
 
-## 👨‍💻 Author
+### 💻 Skills & Interests
 
-**Vikash Kumar Jha**
+```text
+Java
+Spring Boot
+JavaScript
+React
+HTML
+CSS
+MySQL
+Web Development
+```
 
-BCA — Full Stack Development
-
-### Interests
-
-- Java Backend Development
-- Spring Boot
-- Full Stack Development
-- AI-powered Applications
+<p align="center">
+  <a href="https://github.com/vikis3643">
+    <img src="https://img.shields.io/badge/GitHub-vikis3643-181717?style=for-the-badge&logo=github" />
+  </a>
+</p>
 
 ---
 
-## ⭐ Support
+# ⭐ Support the Project
 
-If you find this project useful, consider giving the repository a ⭐ on GitHub.
+If you like this project:
+
+### ⭐ Star the repository
+
+### 🍴 Fork the project
+
+### 📢 Share it with others
+
+Your support motivates me to build more projects. ❤️
 
 ---
 
-## 📄 License
+<p align="center">
 
-This project is created for **educational, portfolio, and learning purposes**.
+### 🌶️ Seamless orders. Secure platform.
+
+**Made with ❤️ by Vikash Kumar Jha**
+
+</p>
+
+---
+
+<p align="center">
+  <a href="https://spiceroute-frontend.onrender.com">
+    🚀 <strong>Explore Live Demo</strong>
+  </a>
+</p>
