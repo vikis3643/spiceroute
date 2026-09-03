@@ -61,11 +61,22 @@ https://spiceroute-k529.onrender.com
 
 ---
 
-## ✨ Core Features
+## ✨ Key Features
 
-### 👤 Secure User Authentication
+| Feature | Description |
+| :--- | :--- |
+| 👤 **User Authentication** | Secure login and registration |
+| 🔐 **JWT Security** | Token-based authentication |
+| 🔵 **Google Sign-In** | Login using Google OAuth |
+| 🔑 **Password Reset** | Reset password through email |
+| 🍽️ **Restaurant Ordering** | Browse and place food orders |
+| 🛒 **Order Management** | Create and manage customer orders |
+| 📦 **Order Status** | Track order/delivery status |
+| 💾 **MySQL Database** | Persistent application data |
+| 📧 **Gmail Integration** | Password reset email delivery |
+| ☁️ **Cloud Deployment** | Frontend and backend deployed on Render |
 
-Authenticate users using multiple methods:
+### 👤 Authentication Options
 
 ```text
 ┌─────────────────────────────┐
@@ -78,30 +89,6 @@ Authenticate users using multiple methods:
 ```
 
 Password reset links are securely generated and sent via Gmail API, configured with a **15-minute expiration period**.
-
----
-
-### 🍽️ Order Management
-
-The core functionality tracks the entire lifecycle of an order:
-
-| Phase | Description |
-| :--- | :--- |
-| **Browse** | View menus and select food items |
-| **Cart** | Add items and manage quantities |
-| **Order** | Place secure orders to the database |
-| **Track** | Monitor real-time order status |
-
----
-
-### 🗄️ Database Integration
-
-The application maintains data persistence using **MySQL**:
-
-* User credentials and profiles
-* Restaurant and menu information
-* Order history and cart items
-* Complex entity relationships via Hibernate
 
 ---
 
@@ -190,16 +177,19 @@ spiceRoute/
 │       ├── .mvn/
 │       ├── Dockerfile
 │       ├── pom.xml
-│       └── mvnw
+│       ├── mvnw
+│       └── mvnw.cmd
 │
 ├── restaurant-frontend/
 │   ├── public/
 │   ├── src/
 │   ├── package.json
+│   ├── package-lock.json
 │   ├── vite.config.js
 │   └── index.html
 │
 ├── render.yaml
+├── .gitignore
 └── README.md
 ```
 
@@ -259,17 +249,17 @@ npm run dev
 
 # 🚀 Future Roadmap
 
-The project can be extended with:
+The project aims to scale beyond traditional ordering by introducing these advanced features:
 
 ```text
-☐ Online payment gateway
-☐ Restaurant/admin dashboard
-☐ Real-time order tracking
-☐ Delivery partner module
-☐ AI-powered food recommendations
-☐ AI customer support chatbot
-☐ Food search and filtering
-☐ Restaurant analytics
+☐ 🤝 Group Ordering & Auto Bill Splitting
+☐ 🎙️ Voice-Activated Menu & Ordering
+☐ 🌱 Zero-Waste / NGO Donation Module
+☐ 📉 Dynamic Surge Pricing Engine
+☐ 🥗 Macro & Calorie-Based Filtering
+☐ 📱 WhatsApp Bot Integration (Webhooks)
+☐ 🎁 Gamified Loyalty & Time-Based Challenges
+☐ 💳 Advanced Payment Gateway Integration
 ```
 
 ---
